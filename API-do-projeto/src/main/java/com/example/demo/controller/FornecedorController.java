@@ -31,10 +31,22 @@ public class FornecedorController {
         return this.service.listarProdutosDoFornecedor(id);
     }
 
-    @PutMapping("/adicionar")
+    @PostMapping("/adicionar")
     public ResponseEntity adicionarFornecedor(@RequestBody Fornecedor fornecedor, UriComponentsBuilder uriBuilder){
         this.service.salvar(fornecedor);
         URI uri = uriBuilder.path("/fornecedor/{uuid}").buildAndExpand(fornecedor.getIdFornecedor()).toUri();
         return  ResponseEntity.created(uri).body(fornecedor);
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity deletarFornecedor(@PathVariable UUID id){
+        this.service.deletar(id);
+        return  ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity atualizarFornecedor(@RequestBody Fornecedor fornecedor){
+        this.service.atualizar(fornecedor);
+        return  ResponseEntity.ok(fornecedor);
     }
 }

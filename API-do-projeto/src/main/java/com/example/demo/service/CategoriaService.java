@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Produto.Produto;
 import com.example.demo.model.categoria.Categoria;
 import com.example.demo.model.categoria.CategoriaRepository;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class CategoriaService {
 
     public List<Categoria> listar(){
         return this.repository.findAll();
+    }
+
+    public List<Produto> listarProdutosDaCategoria(UUID id){
+        Categoria c = this.repository.findCategoriaByIdCategoria(id);
+        return c.getProdutos();
     }
 
     public void atualizar(Categoria categoria){

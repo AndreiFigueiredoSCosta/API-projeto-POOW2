@@ -31,7 +31,6 @@ CREATE TABLE movimentacao(
     id_movimentacao UUID default gen_random_uuid() primary key,
     qtd integer,
     data timestamp,
-    id_tipo_movimentacao UUID,
     entrada boolean,
     id_produto UUID,
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto)

@@ -1,6 +1,8 @@
 package com.example.demo.model.Produto;
 
+import com.example.demo.model.categoria.Categoria;
 import com.example.demo.model.fornecedor.Fornecedor;
+import com.example.demo.model.movimentacao.Movimentacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -41,6 +43,12 @@ public class Produto {
         joinColumns = @JoinColumn(name = "id_produto"),
         inverseJoinColumns = @JoinColumn(name = "id_fornecedor")
     )
-
     private List<Fornecedor> fornecedores;
+
+    @OneToMany(mappedBy = "produto")
+    private List<Movimentacao> movimentacoes;
+
+    @ManyToOne
+    @JoinColumn(name="id_categoria")
+    private Categoria categoria;
 }
