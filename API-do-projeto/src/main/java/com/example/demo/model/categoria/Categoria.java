@@ -1,6 +1,10 @@
 package com.example.demo.model.categoria;
 
 import com.example.demo.model.Produto.Produto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -18,6 +22,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "categoria")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCategoria")
 public class Categoria {
 
     @Id
@@ -29,6 +34,7 @@ public class Categoria {
     @Column(name = "nome_categoria")
     private String nomeCategoria;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria")
     private List<Produto> produtos;
 }

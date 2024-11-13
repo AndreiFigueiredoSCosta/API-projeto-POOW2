@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
     public Produto findByIdProduto(UUID idProduto);
-    public Produto deleteProdutoByIdProduto(UUID idProduto);
+    public void deleteProdutoByIdProduto(UUID idProduto);
 }

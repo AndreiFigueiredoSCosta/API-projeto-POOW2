@@ -6,5 +6,4 @@ import java.util.UUID;
 
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, UUID> {
     public Movimentacao findByIdMovimentacao(UUID idMovimentacao);
-    public void deleteByIdMovimentacao(UUID idMovimentacao);
 }

@@ -3,8 +3,12 @@ package com.example.demo.model.Produto;
 import com.example.demo.model.categoria.Categoria;
 import com.example.demo.model.fornecedor.Fornecedor;
 import com.example.demo.model.movimentacao.Movimentacao;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +23,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "produto")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProduto")
 public class Produto {
 
     @Id
@@ -30,13 +35,14 @@ public class Produto {
     @Column(name="nome_produto")
     private String nomeProduto;
 
-    @NotBlank
+    @NotNull
     @Column(name="qtd_em_estoque")
     private int qtdEmEstoque;
 
-    @NotBlank
+    @NotNull
     private int preco;
 
+    @NotNull
     @ManyToMany
     @JoinTable(
         name = "fornece",
@@ -48,6 +54,9 @@ public class Produto {
     @OneToMany(mappedBy = "produto")
     private List<Movimentacao> movimentacoes;
 
+
+    @JsonBackReference
+    @NotNull
     @ManyToOne
     @JoinColumn(name="id_categoria")
     private Categoria categoria;

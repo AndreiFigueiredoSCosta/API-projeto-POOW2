@@ -1,13 +1,17 @@
 package com.example.demo.model.movimentacao;
 
 import com.example.demo.model.Produto.Produto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -16,6 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "movimentacao")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMovimentacao")
 public class Movimentacao {
 
     @Id
@@ -25,7 +30,7 @@ public class Movimentacao {
 
     private int qtd;
 
-    private Timestamp data;
+    private LocalDateTime data = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "id_produto")

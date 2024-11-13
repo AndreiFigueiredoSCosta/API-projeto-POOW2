@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Produto.Produto;
 import com.example.demo.model.fornecedor.Fornecedor;
 import com.example.demo.service.FornecedorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,13 +27,18 @@ public class FornecedorController {
         return this.service.ListarFornecedores();
     }
 
+    @GetMapping("/listar-fornecedor/{id}")
+    public Fornecedor listarFornecedor(@PathVariable UUID id){
+        return this.service.litarFornecedor(id);
+    }
+
     @GetMapping("/listar-produtos-do-fornecedor/{id}")
     public List<Produto> listarProdutosDoFornecedor(@PathVariable UUID id){
         return this.service.listarProdutosDoFornecedor(id);
     }
 
     @PostMapping("/adicionar")
-    public ResponseEntity adicionarFornecedor(@RequestBody Fornecedor fornecedor, UriComponentsBuilder uriBuilder){
+    public ResponseEntity adicionarFornecedor(@RequestBody @Valid Fornecedor fornecedor, UriComponentsBuilder uriBuilder){
         this.service.salvar(fornecedor);
         URI uri = uriBuilder.path("/fornecedor/{uuid}").buildAndExpand(fornecedor.getIdFornecedor()).toUri();
         return  ResponseEntity.created(uri).body(fornecedor);
@@ -45,7 +51,7 @@ public class FornecedorController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity atualizarFornecedor(@RequestBody Fornecedor fornecedor){
+    public ResponseEntity atualizarFornecedor(@RequestBody @Valid Fornecedor fornecedor){
         this.service.atualizar(fornecedor);
         return  ResponseEntity.ok(fornecedor);
     }
