@@ -4,6 +4,7 @@ import com.example.demo.model.Produto.Produto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -27,23 +28,20 @@ public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_fornecedor")
+    @Schema(description = "Identificador unico do fornecedor")
     private UUID idFornecedor;
 
     @NotBlank
     @Column(name="nome_fornecedor")
+    @Schema(description = "Nome do fornecedor", example = "Marcio show de bola lmtd.")
     private String nomeFornecedor;
 
     @NotBlank
-    @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}",
-            message = "CNPJ inválido, deve seguir o formato XX.XXX.XXX/XXXX-XX"
-    )
+    @Schema(description = "CNPJ do fornecedor", example = "12.345.678/0001-95")
     private String cnpj;
 
     @NotBlank
-    @Pattern(
-            regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}",
-            message = "Telefone inválido, deve seguir o formato (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"
-    )
+    @Schema(description = "Telefone do fornecedor", example = "(11) 98765-4321")
     private String telefone;
 
     @JsonIgnore
@@ -53,5 +51,6 @@ public class Fornecedor {
             joinColumns = @JoinColumn(name = "id_fornecedor"),
             inverseJoinColumns = @JoinColumn(name="id_produto")
     )
+    @Schema(description = "Representa os produtos que esse fornecedor fornece")
     private List<Produto> produtos;
 }
